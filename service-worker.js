@@ -1,4 +1,4 @@
-const CACHE_NAME = 'pomodoro-app-cache-v3';
+const CACHE_NAME = 'pomodoro-app-cache-v4';
 const CACHE_ASSETS = [
     './',
     './index.html',
@@ -36,16 +36,17 @@ self.addEventListener('activate', (event) => {
 
 // Fetch Event: Serve cached resources or fallback to the network
 self.addEventListener('fetch', (event) => {
+    console.log('Handling fetch event for:', event.request.url);
     event.respondWith(
         caches.match(event.request).then((response) => {
-            // Check if the request is for the alarm sound
-            if (!response && event.request.url.endsWith('alarm.mp3')) {
-                console.error('Alarm sound is not cached!');
+            if (response) {
+                console.log('Serving from cache:', event.request.url);
+                return response;
             }
-            return response || fetch(event.request);
+            console.log('Fetching from network:', event.request.url);
+            return fetch(event.request);
         }).catch((error) => {
-            console.error('Error fetching resource:', event.request.url, error);
-            // Optionally provide a fallback here
+            console.error('Fetch failed for:', event.request.url, error);
         })
     );
 });
