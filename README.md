@@ -1,2 +1,2 @@
 # PomodoroApp
- My own personalized Pomodoro APp
+ My own personalized Pomodoro App
