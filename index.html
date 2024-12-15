@@ -3,23 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A Pomodoro Timer App to help you focus and improve productivity. Includes session analytics and inspirational quotes.">
     <title>Pomodoro App</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon"> <!-- Add your favicon here -->
 </head>
 <body>
-    <div class="container">
+    <div class="container" role="main">
         <h1>Pomodoro Timer</h1>
-        <div class="timer">
+        <div class="timer" aria-label="Timer">
             <span id="minutes">00</span>:<span id="seconds">00</span>.<span id="milliseconds">000</span>
         </div>
-        <div class="controls">
-            <button id="start">Start</button>
-            <button id="pause" disabled>Pause</button>
-            <button id="stop" disabled>Stop</button>
+        <div class="controls" role="toolbar" aria-label="Timer controls">
+            <button id="start" aria-label="Start the timer">Start</button>
+            <button id="pause" aria-label="Pause or resume the timer" disabled>Pause</button>
+            <button id="stop" aria-label="Stop the timer" disabled>Stop</button>
+            <button id="dark-mode-toggle" aria-label="Toggle dark mode">Dark Mode</button>
         </div>
-        <div id="message"></div>
+        <div id="message" role="status" aria-live="polite"></div>
+        <div id="quote-container" class="hidden" role="complementary" aria-label="Inspirational Quote"></div>
+        <div id="report" role="region" aria-label="Session Analytics"></div>
     </div>
-    <audio id="alarm-sound" src="alarm.mp3"></audio>
+    <audio id="alarm-sound" src="alarm.mp3" controls hidden></audio>
     <script src="script.js"></script>
 </body>
 </html>
