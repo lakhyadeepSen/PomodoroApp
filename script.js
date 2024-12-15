@@ -59,8 +59,8 @@ async function fetchRandomQuote() {
 // Timer Functions
 function startTimer() {
     if (isPaused) {
-        // Resume
-        startTime = performance.now() - pausedMilliseconds;
+        // Resume from where we left off
+        startTime = performance.now() - elapsedMilliseconds;
         isPaused = false;
     } else {
         // Start the timer from scratch
@@ -78,7 +78,7 @@ function startTimer() {
 function updateTimer() {
     if (!isPaused) {
         const currentTime = performance.now();
-        elapsedMilliseconds = currentTime - startTime;
+        elapsedMilliseconds = currentTime - startTime; // Calculate total elapsed time
         updateTimerDisplay();
         saveState();
         timer = requestAnimationFrame(updateTimer);
@@ -90,13 +90,13 @@ function pauseOrResumeTimer() {
         // Resume
         isPaused = false;
         pauseButton.textContent = "Pause";
-        startTimer();
+        startTime = performance.now() - elapsedMilliseconds; // Adjust startTime to account for paused time
+        timer = requestAnimationFrame(updateTimer);
     } else {
         // Pause
         isPaused = true;
         cancelAnimationFrame(timer);
         pauseButton.textContent = "Resume";
-        startPauseTimer();
     }
 }
 
