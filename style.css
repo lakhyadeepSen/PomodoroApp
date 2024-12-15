@@ -8,7 +8,8 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
-    transition: background-color 0.3s, color 0.3s; /* Smooth transitions for dark mode */
+    transition: background-color 0.3s, color 0.3s;
+    /* Smooth transitions for dark mode */
 }
 
 .container {
@@ -19,14 +20,16 @@ body {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     max-width: 400px;
     width: 90%;
-    transition: background-color 0.3s; /* Smooth transition for dark mode */
+    transition: background-color 0.3s;
+    /* Smooth transition for dark mode */
 }
 
 h1 {
     font-size: 2rem;
     color: #333;
     margin-bottom: 20px;
-    transition: color 0.3s; /* Smooth transition for dark mode */
+    transition: color 0.3s;
+    /* Smooth transition for dark mode */
 }
 
 .timer {
@@ -34,7 +37,8 @@ h1 {
     font-weight: bold;
     color: #444;
     margin-bottom: 20px;
-    transition: color 0.3s; /* Smooth transition for dark mode */
+    transition: color 0.3s;
+    /* Smooth transition for dark mode */
 }
 
 .controls button {
@@ -49,11 +53,13 @@ h1 {
 }
 
 .controls button:hover {
-    transform: scale(1.05); /* Slight zoom on hover */
+    transform: scale(1.05);
+    /* Slight zoom on hover */
 }
 
 .controls button:active {
-    transform: scale(0.95); /* Slight shrink on click */
+    transform: scale(0.95);
+    /* Slight shrink on click */
 }
 
 .controls button:disabled {
@@ -155,12 +161,16 @@ body.dark-mode #dark-mode-toggle:hover {
     text-align: center;
     font-size: 1.2em;
     margin: 20px auto;
-    color: #444; /* Neutral, readable color */
+    color: #444;
+    /* Neutral, readable color */
     font-style: italic;
     padding: 10px;
-    border: 1px solid #ddd; /* Optional border for separation */
-    border-radius: 5px; /* Rounded corners for better appearance */
-    background-color: #f9f9f9; /* Light background for readability */
+    border: 1px solid #ddd;
+    /* Optional border for separation */
+    border-radius: 5px;
+    /* Rounded corners for better appearance */
+    background-color: #f9f9f9;
+    /* Light background for readability */
     max-width: 600px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }

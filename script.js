@@ -91,7 +91,7 @@ function startTimer() {
         elapsedMilliseconds = 0;
 
         // Change the quote only for a new Pomodoro session
-        displayRandomQuote(); 
+        displayRandomQuote();
     }
 
     startButton.disabled = true;
