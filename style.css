@@ -152,15 +152,21 @@ body.dark-mode #dark-mode-toggle:hover {
 
 /* Inspirational Quote Section */
 #quote-container {
-    margin-top: 20px;
-    padding: 15px;
-    background-color: #f9f9f9;
-    border-radius: 5px;
+    text-align: center;
+    font-size: 1.2em;
+    margin: 20px auto;
+    color: #444; /* Neutral, readable color */
     font-style: italic;
-    font-size: 1rem;
-    color: #555;
+    padding: 10px;
+    border: 1px solid #ddd; /* Optional border for separation */
+    border-radius: 5px; /* Rounded corners for better appearance */
+    background-color: #f9f9f9; /* Light background for readability */
+    max-width: 600px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+}
+
+#quote-text {
+    margin: 0;
 }
 
 #quote-container.visible {

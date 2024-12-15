@@ -18,6 +18,30 @@ const quoteContainer = document.getElementById("quote-container");
 const alarmSound = document.getElementById("alarm-sound");
 const darkModeToggle = document.getElementById("dark-mode-toggle");
 
+// List of quotes
+const quotes = [
+    "Karm karo, phal ki icha mat karo.",
+    "Har vakt apne kaam mein samarpit raho.",
+    "Karm mein mahatva rakho, usme hi yog hai.",
+    "Dhairya, Veer, Tapas aur Dharm, yeh sab ek vyakti ko badiya banate hain.",
+    "Apne karm par adhikar hai, par uske phal par nahi.",
+    "Sachchi bhakti se hi mahatva milta hai.",
+    "Dhairya aur tapasya se hi manushya jeevan mein unchiyaon ko praapt karta hai.",
+    "Prem se hi jeevan ki achchai praapt hoti hai.",
+    "Har paristithi mein manushya ko satya aur karm mein vishwas rakhna chahiye.",
+    "Saphalta ki raah kathin hoti hai, lekin asambhav nahi.",
+    "Jeevan mein har chuneeti ko dhairya se swikar karo.",
+    "Saty ka marg hi sabse kathin hota hai, lekin sacha sukh ismein hi hai.",
+    "Har samasya ka samadhan hota hai, usse dhairya aur vishwas se dekho.",
+    "Sachha jeevan wahi hota hai jo dharm ke marg par chale.",
+    "Jeevan ki saphalta mein sachai aur dharm ka palan sabse mahatvapurn hai.",
+    "Karm hi asli puja hai, usse poori nishtha se karo.",
+    "Manushya ko kathinaiyon se nahi darrna chahiye, balki unka samna karna chahiye.",
+    "Dhairya manushya ka asli mitr hai.",
+    "Saphalta ke peeche ki raah hamesha kathin hoti hai, parantu usse tay karna hi asli sahas hai.",
+    ""
+];
+
 // Load Saved State
 const savedState = JSON.parse(localStorage.getItem("pomodoroState")) || {};
 if (savedState.totalMilliseconds) {
@@ -43,17 +67,16 @@ darkModeToggle.addEventListener("click", () => {
     localStorage.setItem("darkMode", darkModeEnabled ? "enabled" : "disabled");
 });
 
-// Fetch Inspirational Quotes
-async function fetchRandomQuote() {
-    try {
-        const response = await fetch("https://api.quotable.io/random?tags=education,hard-work");
-        if (!response.ok) throw new Error("Failed to fetch a quote");
-        const data = await response.json();
-        quoteContainer.textContent = `${data.content} - ${data.author}`;
-    } catch (error) {
-        console.error("Error fetching quote:", error);
-        quoteContainer.textContent = "Hard work beats talent when talent doesn't work hard. - Anonymous";
-    }
+// Function to display a random quote
+function displayRandomQuote() {
+    const randomIndex = Math.floor(Math.random() * quotes.length);
+    const randomQuote = quotes[randomIndex];
+    quoteContainer.textContent = randomQuote; // Set quote in the quote container
+}
+
+// Ensure quote is displayed initially but does not change until a new Pomodoro starts
+if (!quoteContainer.textContent) {
+    displayRandomQuote();
 }
 
 // Timer Functions
@@ -66,6 +89,9 @@ function startTimer() {
         // Start the timer from scratch
         startTime = performance.now();
         elapsedMilliseconds = 0;
+
+        // Change the quote only for a new Pomodoro session
+        displayRandomQuote(); 
     }
 
     startButton.disabled = true;
@@ -90,13 +116,29 @@ function pauseOrResumeTimer() {
         // Resume
         isPaused = false;
         pauseButton.textContent = "Pause";
-        startTime = performance.now() - elapsedMilliseconds; // Adjust startTime to account for paused time
-        timer = requestAnimationFrame(updateTimer);
+
+        clearInterval(pauseTimer); // Stop counting pause time
+
+        // Prompt user to deduct paused time
+        if (pausedMilliseconds > 0) {
+            const deduct = confirm(`You paused for ${Math.floor(pausedMilliseconds / 1000)} seconds. Deduct this time from your work session?`);
+            if (deduct) {
+                elapsedMilliseconds -= pausedMilliseconds; // Deduct paused time
+                if (elapsedMilliseconds < 0) elapsedMilliseconds = 0; // Ensure no negative time
+            }
+            pausedMilliseconds = 0; // Reset paused time
+        }
+
+        startTime = performance.now() - elapsedMilliseconds; // Adjust start time to account for elapsed time
+        timer = requestAnimationFrame(updateTimer); // Resume main timer
     } else {
         // Pause
         isPaused = true;
-        cancelAnimationFrame(timer);
+        cancelAnimationFrame(timer); // Stop main timer
         pauseButton.textContent = "Resume";
+
+        // Start counting pause time
+        startPauseTimer();
     }
 }
 
@@ -118,9 +160,9 @@ function stopTimer() {
 
 function startPauseTimer() {
     pauseTimer = setInterval(() => {
-        pausedMilliseconds += 10;
-        messageDiv.textContent = `Paused for ${Math.floor(pausedMilliseconds / 1000)} seconds`;
-    }, 100);
+        pausedMilliseconds += 1000; // Increment paused time (in milliseconds)
+        messageDiv.textContent = `Paused for ${Math.floor(pausedMilliseconds / 1000)} seconds.`;
+    }, 1000); // Update every second
 }
 
 function resetTimer() {
@@ -150,7 +192,6 @@ function updateTimerDisplay() {
     millisecondsSpan.textContent = milliseconds.toString().padStart(3, "0");
 }
 
-
 // Rest Timer Functions
 function calculateRestTime(workSeconds) {
     if (workSeconds < 300) return 0; // Less than 5 minutes
@@ -159,7 +200,6 @@ function calculateRestTime(workSeconds) {
 
 function startRestTimer(restSeconds) {
     let remainingTime = restSeconds;
-    fetchRandomQuote();
     quoteContainer.style.display = "block";
 
     const restInterval = setInterval(() => {
@@ -167,7 +207,6 @@ function startRestTimer(restSeconds) {
             clearInterval(restInterval);
             alarmSound.play();
             messageDiv.textContent = "Rest is over! Get back to work.";
-            quoteContainer.style.display = "none";
         } else {
             messageDiv.textContent = `Resting... ${remainingTime--} seconds remaining.`;
         }
