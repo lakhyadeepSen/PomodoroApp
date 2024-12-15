@@ -1,0 +1,75 @@
+/* Base Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    text-align: center;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 90%;
+}
+
+h1 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.timer {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #444;
+    margin-bottom: 20px;
+}
+
+.controls button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.controls button:disabled {
+    background: #ddd;
+    cursor: not-allowed;
+}
+
+#start {
+    background-color: #4caf50;
+    color: white;
+}
+
+#pause {
+    background-color: #f0ad4e;
+    color: white;
+}
+
+#stop {
+    background-color: #d9534f;
+    color: white;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+    .timer {
+        font-size: 2.5rem;
+    }
+
+    .controls button {
+        font-size: 0.9rem;
+        padding: 8px 16px;
+    }
+}
