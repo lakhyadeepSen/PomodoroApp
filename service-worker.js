@@ -1,13 +1,14 @@
-const CACHE_NAME = 'pomodoro-app-cache-v1';
+const CACHE_NAME = 'pomodoro-app-cache-v2'; // Increment the version
 const CACHE_ASSETS = [
-  './',           // Cache index.html
-  './index.html', 
+  './',
+  './index.html',
   './style.css',
   './script.js',
-  './alarm.mp3'
+  './alarm.mp3', // Add the alarm sound to the cache
+  './favicon.png'
 ];
 
-// Install Event: Caching Resources
+// Install Event: Cache resources
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
@@ -33,11 +34,18 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Fetch Event: Serve cached resources or fetch from network
+// Fetch Event: Serve cached resources or fallback to the network
 self.addEventListener('fetch', (event) => {
-  event.respondWith(
-    caches.match(event.request).then((response) => {
-      return response || fetch(event.request);
-    })
-  );
-});
+    event.respondWith(
+      caches.match(event.request).then((response) => {
+        // Return the cached resource, or fetch it from the network
+        return response || fetch(event.request);
+      }).catch(() => {
+        // Optionally, return a fallback for specific requests
+        if (event.request.destination === 'document') {
+          return caches.match('./index.html');
+        }
+      })
+    );
+  });
+  
