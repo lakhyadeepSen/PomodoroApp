@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="A Pomodoro Timer App to help you focus and improve productivity. Includes inspirational quotes.">
+    <title>Pomodoro App</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="favicon.png" type="image/x-icon">
+</head>
+
+<body>
+    <div class="container" role="main">
+        <h1>Pomodoro Timer</h1>
+
+        <div id="quote-container" role="complementary" aria-label="Inspirational Quote">
+            <p id="quote-text"></p>
+        </div>
+
+        <div class="timer" aria-label="Timer">
+            <span id="minutes">00</span>:<span id="seconds">00</span>.<span id="milliseconds">000</span>
+        </div>
+
+        <div class="controls" role="toolbar" aria-label="Timer controls">
+            <button id="start" aria-label="Start the timer">Start</button>
+            <button id="pause" aria-label="Pause or resume the timer" disabled>Pause</button>
+            <button id="stop" aria-label="Stop the timer" disabled>Stop</button>
+            <button id="dark-mode-toggle" aria-label="Toggle dark mode">Dark Mode</button>
+        </div>
+
+        <div id="message" role="status" aria-live="polite"></div>
+    </div>
+
+    <audio id="alarm-sound" src="alarm.mp3" hidden></audio>
+    <script src="script.js"></script>
+</body>
+
+</html>
